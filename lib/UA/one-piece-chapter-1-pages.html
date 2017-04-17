@@ -1,0 +1,44 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>Chapters</h1>
+
+<ul id="pages">
+</ul>
+
+</body>
+<script>
+  function get() {
+    return new Promise((resolve, reject) => {
+      const xmlHttp = new XMLHttpRequest();
+      xmlHttp.onreadystatechange = () => {
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+          resolve(xmlHttp.responseText);
+        } else if (xmlHttp.readyState === 4 && xmlHttp.status !== 200) {
+          reject(xmlHttp.status);
+        }
+      }
+      xmlHttp.open('GET', '/api/serie/one-piece/chapter/1', true);
+      xmlHttp.send(null);
+    });
+  }
+
+  get().then((pages) => {
+    JSON.parse(pages).forEach(page => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      const linkText = document.createTextNode(String(page.number));
+      a.href = '/api/serie/one-piece/chapter/1/page/' + page.number;
+      a.title = String(page.number);
+
+      a.appendChild(linkText);
+      li.appendChild(a);
+      document.getElementById('pages').appendChild(li);
+    })
+  }).catch(console.log);
+</script>
+</html> 

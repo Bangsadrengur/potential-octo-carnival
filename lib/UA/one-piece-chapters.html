@@ -7,12 +7,11 @@
 
 <h1>Chapters</h1>
 
-<ul id="pages">
+<ul id="chapters">
 </ul>
 
 </body>
 <script>
-// <li><a href="http://localhost:3000/api/serie/one-piece/chapter/1/page/0">1</a></li>
   function get() {
     return new Promise((resolve, reject) => {
       const xmlHttp = new XMLHttpRequest();
@@ -23,24 +22,26 @@
           reject(xmlHttp.status);
         }
       }
-      xmlHttp.open('GET', '/api/serie/one-piece/chapter/1', true);
+      xmlHttp.open('GET', '/api/serie/one-piece', true);
       xmlHttp.send(null);
     });
   }
 
-  get().then((pages) => {
-    JSON.parse(pages).forEach(page => {
+  get().then((chapters) => {
+    console.log(JSON.parse(chapters)[0]);
+    JSON.parse(chapters).forEach(chapter => {
       const li = document.createElement('li');
       const a = document.createElement('a');
-      const linkText = document.createTextNode(String(page.number));
-      a.href = '/api/serie/one-piece/chapter/1/page/' + page.number;
-      a.title = String(page.number);
+      const linkText = document.createTextNode(
+        String(chapter.number) + " - " + chapter.name
+      );
+      a.href = '/api/serie/one-piece/chapter/' + chapter.number + '/page/1';
+      a.title = String(chapter.number) + " - " + chapter.name;
 
       a.appendChild(linkText);
       li.appendChild(a);
-      document.getElementById('pages').appendChild(li);
+      document.getElementById('chapters').appendChild(li);
     })
   }).catch(console.log);
 </script>
-
 </html> 
