@@ -22,7 +22,7 @@
           reject(xmlHttp.status);
         }
       }
-      xmlHttp.open('GET', '/api/serie/one-piece', true);
+      xmlHttp.open('GET', '/api/series/one-piece', true);
       xmlHttp.send(null);
     });
   }
@@ -35,7 +35,7 @@
       const linkText = document.createTextNode(
         String(chapter.number) + " - " + chapter.name
       );
-      a.href = '/api/serie/one-piece/chapter/' + chapter.number + '/page/1';
+      a.href = 'one-piece-chapter-' + chapter.number + '-pages.html';
       a.title = String(chapter.number) + " - " + chapter.name;
 
       a.appendChild(linkText);

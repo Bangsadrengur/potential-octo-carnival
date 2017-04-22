@@ -22,7 +22,7 @@
           reject(xmlHttp.status);
         }
       }
-      xmlHttp.open('GET', '/api/serie/one-piece/chapter/1', true);
+      xmlHttp.open('GET', '/api/series/one-piece/chapters/1', true);
       xmlHttp.send(null);
     });
   }
@@ -32,7 +32,7 @@
       const li = document.createElement('li');
       const a = document.createElement('a');
       const linkText = document.createTextNode(String(page.number));
-      a.href = '/api/serie/one-piece/chapter/1/page/' + page.number;
+      a.href = '/api/series/one-piece/chapters/1/pages/' + page.number;
       a.title = String(page.number);
 
       a.appendChild(linkText);

@@ -1,0 +1,121 @@
+{
+  "series": {
+    "end": -1, 
+    "manga": [
+      {
+        "a": "flower-dream", 
+        "c": [
+          "Action", 
+          "Adventure", 
+          "Drama", 
+          "Sci-fi", 
+          "Supernatural"
+        ], 
+        "h": 1196, 
+        "i": "5372389645b9ef5a0b1d20d8", 
+        "im": "ad/ad8dbe2c909de99899f1015a360f75e3ced31023672d6ff0d2b7547c.jpg", 
+        "ld": 1416420134.0, 
+        "s": 2, 
+        "t": "Flower Dream"
+      }, 
+      {
+        "a": "kanai-kun", 
+        "c": [
+          "Psychological", 
+          "Slice of Life"
+        ], 
+        "h": 364, 
+        "i": "54430be945b9ef3a6d5818cc", 
+        "im": "05/05d5df58e440371496b217f94cc4894abeba1671bd9edf0e7cd774a1.jpg", 
+        "ld": 1420483442.0, 
+        "s": 2, 
+        "t": "Kanai-kun"
+      }
+    ],
+    "page": -1,
+    "start": 0,
+    "total": 17252
+  },
+  "chapters": {
+    "aka": [],
+    "aka-alias": [],
+    "alias": "airindream",
+    "artist": "",
+    "artist_kw": [],
+    "author": "",
+    "author_kw": [],
+    "categories": [
+      "Comedy",
+      "Drama",
+      "Action"
+    ],
+    "chapters": [
+      [
+        5,
+        1275542373.0,
+        "5",
+        "4e711cb0c09225616d037cc2"
+      ],
+      [
+        4,
+        1275542373.0,
+        "4",
+        "4e711cb1c09225616d037ce4"
+      ],
+      [
+        3,
+        1275542373.0,
+        "3",
+        "4e711cacc09225616d037c72"
+      ],
+      [
+        2,
+        1275542373.0,
+        "2",
+        "4e711cb3c09225616d037d05"
+      ],
+      [
+        1,
+        1275542373.0,
+        "1",
+        "4e711caec09225616d037ca0"
+      ]
+    ],
+    "chapters_len": 5,
+    "created": 1316022774.0,
+    "description": "There is fighting at the high school due to a power struggle for control. The granddaughter of the chief director requests help from the Airin Dreamdo fighting style genius. Will he help? Or will he show his true colors with his bad boy ways?",
+    "hits": 19870,
+    "image": "88/88482f39e126a59bcac77a1df273fae30a9af811fc16cb08f4910cc5.jpg",
+    "language": 0,
+    "last_chapter_date": 1275542373.0,
+    "random": [
+      0.8197780103923099,
+      0
+    ],
+    "released": null,
+    "startsWith": "a",
+    "status": 1,
+    "title": "Airindream",
+    "title_kw": [
+      "airindream"
+    ],
+    "type": 0,
+    "updatedKeywords": true
+  },
+  "pages": {
+    "images": [
+      [
+        32,
+        "87/87b1ac3ddea96bb953342829c3f74ac9f9409a4591aff77b5cf6c308.jpg",
+        570,
+        570
+      ],
+      [
+        31,
+        "78/788bd5eee87ec26032b7631d9f271d9b529adcccd38148668baa9f3f.jpg",
+        730,
+        1229
+      ]
+    ]
+  }
+}
