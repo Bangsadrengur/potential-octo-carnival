@@ -4,6 +4,8 @@ const {
   parseSeries,
   parseChaptersUrl,
   parseChapters,
+  chapterToChapterPath,
+  selectChapter,
 } = require('../lib/source/parsers');
 
 test('parseSeries', t => {
@@ -35,4 +37,29 @@ test('parseChapters', t => {
     { number: 2, name: '2', path: '4e711cb3c09225616d037d05' },
     { number: 1, name: '1', path: '4e711caec09225616d037ca0' },
   ])
+});
+
+test('selectChapter', t => {
+  const parsedChapters = [
+    { number: 5, name: '5', path: '4e711cb0c09225616d037cc2' },
+    { number: 4, name: '4', path: '4e711cb1c09225616d037ce4' },
+    { number: 3, name: '3', path: '4e711cacc09225616d037c72' },
+    { number: 2, name: '2', path: '4e711cb3c09225616d037d05' },
+    { number: 1, name: '1', path: '4e711caec09225616d037ca0' },
+  ];
+  const output = selectChapter(2)(parsedChapters);
+
+  t.deepEqual(
+    output,
+    [{ number: 2, name: '2', path: '4e711cb3c09225616d037d05' }]
+  );
+});
+
+test('chapterToChapterPath', t => {
+  const parsedChapter = [
+    { number: 4, name: '4', path: '4e711cb1c09225616d037ce4' },
+  ];
+  const output = chapterToChapterPath(parsedChapter);
+
+  t.deepEqual(output, '4e711cb1c09225616d037ce4');
 });
