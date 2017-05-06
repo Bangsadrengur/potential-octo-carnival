@@ -1,0 +1,7 @@
+doctype html
+html(lang="en")
+  head
+    title Page #{page}
+  body
+    - var source = `/api/series/${serie}/chapters/${chapter}/pages/${page - 1}`
+    img(src= source, width="100%", height="auto")
