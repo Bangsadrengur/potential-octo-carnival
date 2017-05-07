@@ -4,4 +4,9 @@ html(lang="en")
     title Page #{page}
   body
     - var source = `/api/series/${serie}/chapters/${chapter}/pages/${page - 1}`
-    img(src= source, width="100%", height="auto")
+    - var next = `/browse/series/${serie}/chapters/${chapter}/pages/${Number(page) + 1}`
+    - var chapters = `/browse/series/${serie}/chapters`
+    if hasNext
+      a(href= next): img(src= source, width="100%", height="auto")
+    else
+      a(href= chapters): img(src= source, width="100%", height="auto")
