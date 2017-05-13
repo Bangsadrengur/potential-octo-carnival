@@ -6,6 +6,5 @@ html(lang="en")
     h1 Chapters
     ul
       each chapter in chapters
-        -
-          var link = "/browse/series/" + serie + "/chapters/" +  chapter.number + "/pages"
+        - var link = "/browse/series/" + serie + "/chapters/" +  chapter.number + "/pages/1"
         li: a(href= link) #{chapter.number} - #{chapter.name}
