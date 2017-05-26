@@ -6,6 +6,7 @@ const {
   parseChapters,
   chapterToChapterPath,
   selectChapter,
+  pagesToPagePath,
 } = require('../lib/source/parsers');
 
 test('parseSeries', t => {
@@ -62,4 +63,14 @@ test('chapterToChapterPath', t => {
   const output = chapterToChapterPath(parsedChapter);
 
   t.deepEqual(output, '4e711cb1c09225616d037ce4');
+});
+
+test('pagesToPagePath', t => {
+  const pages = [
+    { number: 1, path: 'path-1.jpg', height: 1800, width: 1108 },
+    { number: 2, path: 'path-2.jpg', height: 800, width: 1000 },
+  ];
+  const output = pagesToPagePath(1)(pages);
+
+  t.deepEqual(output, 'path-1.jpg');
 });
