@@ -9,4 +9,4 @@ html(lang="en")
         ul
         each chapter in serie.chapters
           - var link = "/browse/series/" + serie.urlName + "/chapters/" +  chapter.number + "/pages/1"
-          li: a(href= link) #{chapter.number} - #{chapter.name}
+          li: a(href= link) #{chapter.number} - #{chapter.name} - #{chapter.date}
