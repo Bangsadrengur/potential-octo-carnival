@@ -1,11 +1,12 @@
 doctype html
 html(lang="en")
   head
-    title Series
+    title Manga Now (sh)
   body
-    h1 Series
-    ul
+    h1 Manga Now (sh)
       each serie in series
-        -
-          var link = "/browse/series/" + serie.replace(/\s+/g, '-').toLowerCase() + "/chapters"
-        li: a(href= link)= serie
+        h2 #{serie.name}
+        ul
+        each chapter in serie.chapters
+          - var link = "/browse/series/" + serie.urlName + "/chapters/" +  chapter.number + "/pages/1"
+          li: a(href= link) #{chapter.number} - #{chapter.name}
