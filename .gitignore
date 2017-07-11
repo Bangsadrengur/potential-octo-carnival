@@ -1,4 +1,5 @@
 node_modules/
+elm-stuff/
 
 test.jpg
 npm-debug.log
