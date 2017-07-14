@@ -138,4 +138,4 @@ decodeSeries = Decode.list decodeSerie
 
 getSeries : Cmd Msg
 getSeries =
-  let url = "http://localhost:3000/api/series" in Http.send LoadSeries (Http.get url decodeSeries)
+  let url = "/api/series" in Http.send LoadSeries (Http.get url decodeSeries)
