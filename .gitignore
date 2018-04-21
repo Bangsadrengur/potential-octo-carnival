@@ -1,5 +1,6 @@
 node_modules/
 elm-stuff/
+dist/
 
 test.jpg
 npm-debug.log
