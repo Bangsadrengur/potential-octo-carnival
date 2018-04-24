@@ -6,12 +6,13 @@
   "author": "",
   "main": "js/index.js",
   "scripts": {
+    "build": "npm run elm",
     "dev": "nodemon -x \"npm test && npm run lint && npm run sort-package\"",
     "elm": "scripts/elm",
     "elm-reactor": "elm-reactor",
     "lint": "eslint js/ test/",
     "now": "now",
-    "start": "npm run elm && echo 'Starting application' && node js/index.js",
+    "start": "echo 'Starting application' && node js/index.js",
     "test": "ava"
   },
   "dependencies": {
@@ -43,6 +44,9 @@
     "sort-package-json": "^1.12.0"
   },
   "now": {
-    "alias": "manga"
+    "alias": "manga",
+    "env": {
+      "NODE_ENV": "production"
+    }
   }
 }
