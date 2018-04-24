@@ -4,8 +4,8 @@ UA_PATH=elm/user-agent
 DIST_PATH=dist
 
 [ -d $DIST_PATH ] || mkdir $DIST_PATH
-$ELM_MAKE $UA_PATH/Main.elm --output $DIST_PATH/index.html
-$ELM_MAKE $UA_PATH/Pages.elm --output $DIST_PATH/page.html
+$ELM_MAKE $UA_PATH/Main.elm --yes --output $DIST_PATH/index.html
+$ELM_MAKE $UA_PATH/Pages.elm --yes --output $DIST_PATH/page.html
 echo "PATH ."
 ls -l
 echo "PATH ${DIST_PATH}"
