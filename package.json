@@ -6,8 +6,9 @@
   "author": "",
   "main": "js/index.js",
   "scripts": {
-    "build": "npm-run-all -l create-dist elm",
+    "build:local": "npm-run-all -l create-dist elm",
     "dev": "nodemon -x \"npm test && npm run lint && npm run sort-package\"",
+    "deploy": "npm-run-all -l build:local now",
     "create-dist": "[ -d dist/ ] || mkdir dist/",
     "elm": "npm-run-all -l elm-make elm-page-index elm-page-page",
     "elm-make": "elm-make --yes",
@@ -15,7 +16,7 @@
     "elm-page-page": "elm-make elm/user-agent/Pages.elm --output dist/page.html",
     "elm-reactor": "elm-reactor",
     "lint": "eslint js/ test/",
-    "now": "now",
+    "now": "now --public",
     "start": "echo 'Starting application' && node js/index.js",
     "test": "ava"
   },
@@ -52,6 +53,11 @@
     "alias": "manga",
     "env": {
       "NODE_ENV": "production"
-    }
+    },
+    "files": [
+      "js/",
+      "dist/",
+      "package.json"
+    ]
   }
 }
