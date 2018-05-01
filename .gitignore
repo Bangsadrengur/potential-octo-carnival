@@ -4,3 +4,4 @@ dist/
 
 test.jpg
 npm-debug.log
+*.swp

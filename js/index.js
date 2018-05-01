@@ -5,7 +5,7 @@ const createDB = require('./db');
 
 const favorites = {
   'one-piece': { lookup: 'One Piece', source: 'manga-eden' },
-  'onepunch-man': { lookup: 'Onepunch-Man', source: 'mangafreak' },
+  // 'onepunch-man': { lookup: 'Onepunch-Man', source: 'mangafreak' },
 };
 
 const source = createSource(favorites);

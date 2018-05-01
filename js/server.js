@@ -95,6 +95,16 @@ module.exports = ({ getChapters, getPages, getPage }, favorites) => {
       .catch((error) => { console.log(error); });
   });
 
+  app.get('/api/series/:serieId/chapters/limit/:limit', (req, res) => {
+    const serieId = req.params.serieId;
+    const limit = req.params.limit;
+    console.log(`/api/series/${serieId}/chapters/limit${limit}`);
+    getChapters(serieId)
+      .then(R.take(5))
+      .then((chapters) => { res.json(chapters); })
+      .catch((error) => { console.log(error); });
+  });
+
   app.get('/api/series/:serieId/chapters/:chapterId/pages', (req, res) => {
     console.log(req.params);
     getPages(req.params.serieId, req.params.chapterId)
