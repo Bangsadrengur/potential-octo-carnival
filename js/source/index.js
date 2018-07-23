@@ -2,9 +2,9 @@ const MangaEden = require('./manga-eden');
 const Mangafreak = require('./mangafreak');
 const R = require('ramda');
 
-const source = (favorites) => {
+const source = (system, favorites) => {
   const sources = {
-    'manga-eden': MangaEden(R.pluck('lookup', favorites)),
+    'manga-eden': MangaEden(system, R.pluck('lookup', favorites)),
     mangafreak: Mangafreak(R.pluck('lookup', favorites)),
   };
 

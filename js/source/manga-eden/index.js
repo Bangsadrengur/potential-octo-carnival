@@ -1,5 +1,4 @@
 const R = require('ramda');
-const rp = require('request-promise-native');
 const {
   parseSeries,
   parseChaptersUrl,
@@ -15,11 +14,14 @@ const listPath = '/api/list/0/';
 const chapters = '/api/manga/';
 const pages = '/api/chapter/';
 
-const getMangaList = () => rp({ uri: url + listPath, encoding: null });
-const getPageList = chapterId => rp({ uri: url + pages + chapterId, encoding: null });
-const getImage = path => rp({ uri: R.concat(cdnUrl, path), encoding: null });
 
-const createSource = (seriesMap) => {
+const Source = ({ HTTPRequest }, seriesMap) => {
+  const { get } = HTTPRequest();
+
+  const getMangaList = () => get(url + listPath);
+  const getPageList = chapterId => get(url + pages + chapterId);
+  const getImage = path => get(R.concat(cdnUrl, path));
+
   const getSeries = () =>
     getMangaList()
       .then(parseSeries);
@@ -28,7 +30,7 @@ const createSource = (seriesMap) => {
     getSeries()
       .then(parseChaptersUrl(seriesMap[serie]))
       .then(R.concat(url + chapters))
-      .then(rp)
+      .then(get)
       .then(parseChapters);
 
   const getPages = (serie, chapter) =>
@@ -54,4 +56,4 @@ const createSource = (seriesMap) => {
   };
 };
 
-module.exports = createSource;
+module.exports = Source;
