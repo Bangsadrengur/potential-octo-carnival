@@ -1,10 +1,25 @@
-const R = require('ramda');
+const {
+  assoc,
+  compose,
+  curry,
+  equals,
+  filter,
+  head,
+  keys,
+  map,
+  pipe,
+  project,
+  prop,
+  propEq,
+  reduce,
+  where,
+} = require('ramda');
 
-const renameKeys = R.curry((keysMap, obj) =>
-  R.reduce(
-    (acc, key) => R.assoc(keysMap[key] || key, obj[key], acc),
+const renameKeys = curry((keysMap, obj) =>
+  reduce(
+    (acc, key) => assoc(keysMap[key] || key, obj[key], acc),
     {},
-    R.keys(obj),
+    keys(obj),
   ));
 
 /*
@@ -29,11 +44,11 @@ const renameKeys = R.curry((keysMap, obj) =>
  * output:
  *   [{ title: Title :: String, id: ID :: String }]
  */
-const parseSeries = R.pipe(
+const parseSeries = pipe(
   JSON.parse,
-  R.prop('manga'),
-  R.project(['t', 'i']),
-  R.map(renameKeys({ t: 'title', i: 'id' })),
+  prop('manga'),
+  project(['t', 'i']),
+  map(renameKeys({ t: 'title', i: 'id' })),
 );
 
 /*
@@ -43,7 +58,7 @@ const parseSeries = R.pipe(
  * Output: url :: String
  */
 const parseChaptersUrl = serie => series =>
-  R.prop('id', R.head(R.filter(R.propEq('title', serie), series)));
+  prop('id', head(filter(propEq('title', serie), series)));
 
 /*
  * usage: output = parseChapters(input)
@@ -92,15 +107,15 @@ const epochToDate = (epoch) => {
 
 const dateToReadable = date => `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 
-const parseChapters = R.pipe(
+const parseChapters = pipe(
   JSON.parse,
-  R.prop('chapters'),
-  R.map(([number, timestamp, name, path]) =>
+  prop('chapters'),
+  map(([number, timestamp, name, path]) =>
     ({
       number,
       name: name || 'MISSING NAME',
       path,
-      date: R.compose(dateToReadable, epochToDate)(timestamp),
+      date: compose(dateToReadable, epochToDate)(timestamp),
     })),
 );
 
@@ -121,10 +136,10 @@ const parseChapters = R.pipe(
  *   where number === chapterNumber for all chapters in chapter and
  *   chapter.length === 1
  */
-const selectChapter = R.pipe(
+const selectChapter = pipe(
   Number,
-  R.propEq('number'),
-  R.filter,
+  propEq('number'),
+  filter,
 );
 
 /*
@@ -138,9 +153,9 @@ const selectChapter = R.pipe(
  *   where chapter.length === 1
  * Output: path :: String, path === chapter[0].path
  */
-const chapterToChapterPath = R.pipe(
-  R.head,
-  R.prop('path'),
+const chapterToChapterPath = pipe(
+  head,
+  prop('path'),
 );
 
 /*
@@ -155,10 +170,10 @@ const chapterToChapterPath = R.pipe(
  * Output: path :: String
  */
 const pagesToPagePath = number =>
-  R.compose(
-    R.prop('path'),
-    R.head,
-    R.filter(R.where({ number: R.equals(number) })),
+  compose(
+    prop('path'),
+    head,
+    filter(where({ number: equals(number) })),
   );
 
 module.exports = {

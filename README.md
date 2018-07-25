@@ -6,3 +6,4 @@
 - Fetches manga and nothing else
 - Displays manga pages full screen and nothing else
 - Preloads an entire chapter when reading it
+- Minimizes calls to external sources when querying for data
