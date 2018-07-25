@@ -1,5 +1,5 @@
 const test = require('ava');
-const Backend = require('../js');
+const Backend = require('../backend');
 
 const routes = {};
 
@@ -85,7 +85,7 @@ test('fetching latest chapters for available series', (t) => {
 
 test.todo('fetching a page of a chapter');
 test.todo('minimizing calls to external sources when querying for data');
-test.dodo('integrating with multiple sources of manga');
+test.todo('integrating with multiple sources of manga');
 
 test.todo('failing to fetch some of the latest chapters for available series');
 test.todo('failing to fetch all of the latest chapters of the available series');

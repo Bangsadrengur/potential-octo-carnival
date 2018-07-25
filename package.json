@@ -4,7 +4,7 @@
   "description": "Manga API in node.js",
   "license": "ISC",
   "author": "",
-  "main": "js/index.js",
+  "main": "backend/index.js",
   "scripts": {
     "build:local": "npm-run-all -l create-dist elm",
     "create-dist": "[ -d dist/ ] || mkdir dist/",
@@ -12,10 +12,10 @@
     "dev": "nodemon -x \"npm test && npm run lint && sort-package-json\"",
     "elm": "npm-run-all -l elm-make elm-page-index elm-page-page",
     "elm-make": "elm-make --yes",
-    "elm-page-index": "elm-make elm/Main.elm --output dist/index.html",
-    "elm-page-page": "elm-make elm/Pages.elm --output dist/page.html",
+    "elm-page-index": "elm-make frontend/Main.elm --output dist/index.html",
+    "elm-page-page": "elm-make frontend/Pages.elm --output dist/page.html",
     "elm-reactor": "elm-reactor",
-    "lint": "eslint js/ test/",
+    "lint": "eslint backend/ test/",
     "now": "now --public",
     "start": "echo 'Starting application' && node bin/server.js",
     "test": "ava"
