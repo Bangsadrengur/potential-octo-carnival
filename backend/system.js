@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const rp = require('request-promise-native');
 const cache = require('memory-cache');
+const debug = require('debug');
 
 function WebApplicationFramework() {
   const app = express();
@@ -18,7 +19,7 @@ function WebApplicationFramework() {
 
 function HTTPRequest() {
   return {
-    get: uri => rp({ uri, encoding: null }),
+    get: (uri) => { debug('source:get')(uri); return rp({ uri, encoding: null }); },
   };
 }
 
