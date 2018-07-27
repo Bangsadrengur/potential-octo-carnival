@@ -71,8 +71,7 @@ const system = {
 test('fetching latest chapters for available series', (t) => {
   Backend(system, favorites);
 
-  return webApplicationFramework.trigger(
-    '/api/series/:serieId/chapters/limit/:limit')
+  return webApplicationFramework.trigger('/api/series/:serieId/chapters/limit/:limit')
     .then((output) => {
       t.deepEqual(output, [{
         number: 1,

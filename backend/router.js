@@ -3,13 +3,10 @@ const ms = require('ms');
 
 const viewsPath = 'dist';
 
-module.exports = (
-  { WebApplicationFramework },
+function Router(
+  { get },
   { getChapters, getPage },
-) => {
-  const webApplicationFramework = WebApplicationFramework();
-  const { get } = webApplicationFramework;
-
+) {
   get('/', (req, res) => {
     res.sendFile('index.html', { root: viewsPath });
   });
@@ -26,8 +23,7 @@ module.exports = (
   });
 
   get('/api/series/:serieId/chapters/limit/:limit', (req, res, next) => {
-    const serieId = req.params.serieId;
-    const limit = req.params.limit;
+    const { serieId, limit } = req.params;
     getChapters(serieId)
       .then(R.take(limit))
       .then((chapters) => { res.json(chapters); })
@@ -35,13 +31,14 @@ module.exports = (
   });
 
   get('/api/series/:serieId/chapters/:chapterId/pages/:pageId', (req, res, next) => {
-    getPage(req.params.serieId, req.params.chapterId, req.params.pageId)
+    const { serieId, chapterId, pageId } = req.params;
+    getPage(serieId, chapterId, pageId)
       .then((image) => {
         res.setHeader('Cache-Control', 'max-age=86400');
         res.end(image);
       })
       .catch((error) => { next(error); });
   });
+}
 
-  return webApplicationFramework;
-};
+module.exports = Router;

@@ -1,6 +1,6 @@
 const { values, pluck } = require('ramda');
 const Source = require('./source');
-const Server = require('./server');
+const configurePathRoutes = require('./router');
 const DB = require('./db');
 
 const FAVORITES = {
@@ -9,13 +9,15 @@ const FAVORITES = {
 };
 
 function Con(system, favorites = FAVORITES) {
+  const { WebApplicationFramework } = system;
+  const web = WebApplicationFramework();
   const source = Source(system, favorites);
   const db = DB(system, source);
-  const server = Server(
-    system,
+  configurePathRoutes(
+    web,
     db,
     values(pluck('lookup', favorites)));
-  return server;
+  return web;
 }
 
 module.exports = Con;
