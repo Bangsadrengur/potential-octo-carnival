@@ -1,6 +1,6 @@
 const configurePathRoutes = require('./router');
 const DB = require('./db');
-const SOURCES = require('../sources');
+const SOURCES = require('./sources');
 
 function Con(system, Sources = SOURCES) {
   const { WebApplicationFramework } = system;
