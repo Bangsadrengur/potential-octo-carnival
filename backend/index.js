@@ -1,22 +1,16 @@
-const { values, pluck } = require('ramda');
-const Source = require('./source');
 const configurePathRoutes = require('./router');
 const DB = require('./db');
+const SOURCES = require('../sources');
 
-const FAVORITES = {
-  'one-piece': { lookup: 'One Piece', source: 'manga-eden' },
-  // 'onepunch-man': { lookup: 'Onepunch-Man', source: 'mangafreak' },
-};
-
-function Con(system, favorites = FAVORITES) {
+function Con(system, Sources = SOURCES) {
   const { WebApplicationFramework } = system;
   const web = WebApplicationFramework();
-  const source = Source(system, favorites);
+  const source = Sources(system);
   const db = DB(system, source);
   configurePathRoutes(
     web,
     db,
-    values(pluck('lookup', favorites)));
+  );
   return web;
 }
 

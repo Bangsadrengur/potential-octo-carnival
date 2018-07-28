@@ -15,14 +15,11 @@ function DB({ cache }, source) {
   });
 
   const getChapters = serie => getCached(source.getChapters)(Array(serie));
-  const getPages =
-    (serie, chapter) => getCached(source.getPages)([serie, chapter]);
   const getPage = (serie, chapter, page) =>
     getCached(source.getPage)([serie, chapter, page]);
 
   return {
     getChapters,
-    getPages,
     getPage,
   };
 }

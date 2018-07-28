@@ -7,7 +7,7 @@ const {
   chapterToChapterPath,
   selectChapter,
   pagesToPagePath,
-} = require('../backend/source/manga-eden/parsers');
+} = require('../sources/manga-eden/parsers');
 
 test('parseSeries', (t) => {
   const output = parseSeries(JSON.stringify(SERIES));

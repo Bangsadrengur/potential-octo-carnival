@@ -1,76 +1,66 @@
 const test = require('ava');
 const Backend = require('../backend');
 
-const routes = {};
-
-const favorites = {
-  serie: { lookup: 'Manga serie', source: 'manga-eden' },
-};
-
 const cache = {
   get: () => {},
   put: () => {},
 };
 
-test('fetching latest chapters for available series', (t) => {
-  function HTTPRequest() {
-    const serie = {
-      end: 1,
-      manga: [{
-        a: 'a',
-        c: ['c'],
-        h: 0,
-        i: 'id',
-        im: 'im',
-        ld: 0,
-        s: 0,
-        t: 'Manga serie',
-      }],
-      page: 1,
-      start: 1,
-      total: 1,
-    };
-
-
-    const chapters = {
-      chapters: [[1, 1275542373, 'Chapter one', 'path/to/chapter']],
-    };
-
-    const get = async (url) => {
-      if (url === 'http://www.mangaeden.com/api/list/0/') { return JSON.stringify(serie); }
-      if (url === 'http://www.mangaeden.com/api/manga/id') { return JSON.stringify(chapters); }
-      return {};
-    };
-
-    return {
-      get,
-    };
-  }
-
-  const webApplicationFramework = {
-    trigger: uri => new Promise((resolve, reject) => {
-      routes[uri](
-        { params: { serieId: 'serie', limit: 1 } },
-        { json: (...args) => { resolve(...args); } },
-        (...args) => { reject(...args); },
-      );
-    }),
-    get: (uri, callback) => {
-      routes[uri] = callback;
-    },
+function Sources() {
+  return {
+    getPage: async (/* serie, chapter, page */) => Buffer.from([0x00, 0x01]),
+    getChapters: async (/* serie */) => ([{
+      date: '3/5/2010',
+      name: 'Chapter one',
+      number: 1,
+      path: 'path/to/chapter',
+    }]),
   };
+}
 
-  function WebApplicationFramework() {
-    return webApplicationFramework;
+const getReq = (req) => {
+  switch (req) {
+    case '/api/series/:serieId/chapters/:chapterId/pages/:pageId':
+      return { params: { serieId: 'serie', chapterId: '1', pageId: '1' } };
+    case '/api/series/:serieId/chapters/limit/:limit':
+      return { params: { serieId: 'serie', limit: 1 } };
+    default:
+      return {};
   }
+};
 
+const routes = {};
+
+const webApplicationFramework = {
+  trigger: uri => new Promise((resolve, reject) => {
+    const req = getReq(uri);
+    routes[uri](
+      req,
+      {
+        json: (...args) => { resolve(...args); },
+        setHeader: () => {},
+        end: (...args) => { resolve(...args); },
+      },
+      (...args) => { reject(...args); },
+    );
+  }),
+  get: (uri, callback) => {
+    routes[uri] = callback;
+  },
+};
+
+function WebApplicationFramework() {
+  return webApplicationFramework;
+}
+
+
+test('fetching latest chapters for available series', (t) => {
   const system = {
     WebApplicationFramework,
-    HTTPRequest,
     cache,
   };
 
-  Backend(system, favorites);
+  Backend(system, Sources);
 
   return webApplicationFramework.trigger('/api/series/:serieId/chapters/limit/:limit')
     .then((output) => {
@@ -84,96 +74,12 @@ test('fetching latest chapters for available series', (t) => {
 });
 
 test('fetching a page of a chapter', (t) => {
-  function HTTPRequest() {
-    const serie = {
-      end: 1,
-      manga: [{
-        a: 'a',
-        c: ['c'],
-        h: 0,
-        i: 'serie-id',
-        im: 'im',
-        ld: 0,
-        s: 0,
-        t: 'Manga serie',
-      }],
-      page: 1,
-      start: 1,
-      total: 1,
-    };
-
-    const chapters = {
-      chapters: [[1, 1275542373, 'Chapter one', 'chapter-id']],
-    };
-
-    const pages = {
-      images: [
-        [
-          0,
-          'two/part-path.jpg',
-          570,
-          570,
-        ],
-      ],
-    };
-
-    const get = async (url) => {
-      if (url === 'http://www.mangaeden.com/api/list/0/') { return JSON.stringify(serie); }
-      if (url === 'http://www.mangaeden.com/api/manga/serie-id') {
-        return JSON.stringify(chapters);
-      }
-      if (url === 'http://www.mangaeden.com/api/chapter/chapter-id') {
-        return JSON.stringify(pages);
-      }
-      if (url === 'http://cdn.mangaeden.com/mangasimg/two/part-path.jpg') {
-        return Buffer.from([0x00, 0x01]);
-      }
-      return {};
-    };
-
-    return {
-      get,
-    };
-  }
-
-  const getReq = (req) => {
-    switch (req) {
-      case '/api/series/:serieId/chapters/:chapterId/pages/:pageId':
-        return { params: { serieId: 'serie', chapterId: '1', pageId: '1' } };
-      default:
-        return {};
-    }
-  };
-
-  const webApplicationFramework = {
-    trigger: uri => new Promise((resolve, reject) => {
-      const req = getReq(uri);
-      routes[uri](
-        req,
-        {
-          json: (...args) => { resolve(...args); },
-          setHeader: () => {},
-          end: (...args) => { resolve(...args); },
-        },
-        (...args) => { reject(...args); },
-      );
-    }),
-    get: (uri, callback) => {
-      routes[uri] = callback;
-    },
-  };
-
-  function WebApplicationFramework() {
-    return webApplicationFramework;
-  }
-
   const system = {
     WebApplicationFramework,
-    HTTPRequest,
     cache,
   };
 
-  Backend(system, favorites);
+  Backend(system, Sources);
 
   return webApplicationFramework.trigger('/api/series/:serieId/chapters/:chapterId/pages/:pageId')
     .then((output) => {
