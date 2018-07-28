@@ -18,7 +18,7 @@
     "lint": "eslint backend/ test/",
     "now": "now --public",
     "start": "echo 'Starting application' && node bin/server.js",
-    "test": "ava"
+    "test": "ava && nyc --reporter=text --reporter=lcov ava"
   },
   "dependencies": {
     "JSONStream": "^1.3.1",
@@ -34,7 +34,7 @@
     "npm-run-all": "^4.1.2",
     "pify": "^2.3.0",
     "pug": "^2.0.0-rc.1",
-    "ramda": "^0.23.0",
+    "ramda": "^0.25.0",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.3",
     "sort-package-json": "^1.11.0"
@@ -49,6 +49,8 @@
     "eslint-plugin-react": "^6.10.3",
     "nodemon": "^1.11.0",
     "now": "^11.1.7",
+    "nyc": "^12.0.2",
+    "sinon": "^6.1.4",
     "sort-package-json": "^1.12.0"
   },
   "now": {

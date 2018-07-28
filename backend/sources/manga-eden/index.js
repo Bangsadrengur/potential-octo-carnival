@@ -15,12 +15,14 @@ const chapters = '/api/manga/';
 const pages = '/api/chapter/';
 
 
-const Source = ({ HTTPRequest }, seriesMap) => {
+const Source = ({ HTTPRequest }) => {
   const { get } = HTTPRequest();
 
   const getMangaList = () => get(url + listPath);
   const getPageList = chapterId => get(url + pages + chapterId);
   const getImage = path => get(R.concat(cdnUrl, path));
+
+  const seriesMap = { 'One Piece': 'one-piece' };
 
   const getSeries = () =>
     getMangaList()
