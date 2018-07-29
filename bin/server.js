@@ -1,7 +1,7 @@
-const Backend = require('../backend');
+const App = require('../backend/app');
 const system = require('../backend/system');
 
-const backend = Backend(system);
+const app = App(system);
 const port = 3000;
 
-backend.start(port);
+app.start(port);

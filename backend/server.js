@@ -7,32 +7,33 @@ function Server(
   { getChapters: getChaptersFromSource, getPage: getPageFromSource },
 ) {
   const browseRoot = () =>
-    (req, res) => {
+    (res) => {
+      console.log("SENDING FILE");
       res.sendFile('index.html', { root: viewsPath });
     };
 
   const browsePage = () =>
-    (req, res) => {
+    (res) => {
       res.sendFile('page.html', { root: viewsPath, maxAge: ms('1d') });
     };
 
   const getChapters = serie =>
-    (req, res, next) => {
+    (res, next) => {
       getChaptersFromSource(serie)
         .then((chapters) => { res.json(chapters); })
         .catch((error) => { next(error); });
     };
 
   const getChaptersLimitedTo = (serie, limit) =>
-    (req, res, next) => {
+    (res, next) => {
       getChaptersFromSource(serie)
         .then(R.take(limit))
         .then((chapters) => { res.json(chapters); })
         .catch((error) => { next(error); });
     };
 
-  const getPage = ({ serie, chapter, page }) =>
-    (req, res, next) => {
+  const getPage = (serie, chapter, page) =>
+    (res, next) => {
       getPageFromSource(serie, chapter, page)
         .then((image) => {
           res.setHeader('Cache-Control', 'max-age=86400');

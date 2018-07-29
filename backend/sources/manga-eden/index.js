@@ -22,15 +22,13 @@ const Source = ({ HTTPRequest }) => {
   const getPageList = chapterId => get(url + pages + chapterId);
   const getImage = path => get(R.concat(cdnUrl, path));
 
-  const seriesMap = { 'One Piece': 'one-piece' };
-
   const getSeries = () =>
     getMangaList()
       .then(parseSeries);
 
   const getChapters = serie =>
     getSeries()
-      .then(parseChaptersUrl(seriesMap[serie]))
+      .then(parseChaptersUrl(serie))
       .then(R.concat(url + chapters))
       .then(get)
       .then(parseChapters);

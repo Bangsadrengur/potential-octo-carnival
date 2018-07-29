@@ -59,14 +59,12 @@ test.cb('fetching a page of One Piece', (t) => {
   t.plan(1);
   const backend = Backend(system);
 
-  const fn = backend.getPage({
-    serie: 'One Piece',
-    chapter: 1,
-    page: 1,
-  });
+  const serie = 'one-piece';
+  const chapter = 1;
+  const page = 1;
+  const fn = backend.getPage(serie, chapter, page);
 
   fn(
-    null,
     {
       end: (arg) => {
         t.deepEqual(arg, Buffer.from([0x00, 0x01]));
