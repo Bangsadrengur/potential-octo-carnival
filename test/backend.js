@@ -1,10 +1,5 @@
 const test = require('ava');
-const Backend = require('../backend/backend');
-
-const cache = {
-  get: () => {},
-  put: () => {},
-};
+const Domain = require('../backend/domain');
 
 function HTTPRequest() {
   const serie = {
@@ -17,7 +12,7 @@ function HTTPRequest() {
       im: 'im',
       ld: 0,
       s: 0,
-      t: 'one-piece',
+      t: 'One Piece',
     }],
     page: 1,
     start: 1,
@@ -31,51 +26,53 @@ function HTTPRequest() {
 
   const pages = { images: [[0, 'image.extension', 123, 456]] };
 
-  const image = Buffer.from([0x00, 0x01]);
 
-  const get = async (url) => {
+  const getEncoded = async (url) => {
     if (url === 'http://www.mangaeden.com/api/list/0/') { return JSON.stringify(serie); }
     if (url === 'http://www.mangaeden.com/api/manga/id') { return JSON.stringify(chapters); }
     if (url === 'http://www.mangaeden.com/api/chapter/path/to/chapter') {
       return JSON.stringify(pages);
     }
-    if (url === 'http://cdn.mangaeden.com/mangasimg/image.extension') {
-      return image;
-    }
     return {};
   };
 
+  const getUnencoded = async () => Buffer.from([0x00, 0x01]);
+
   return {
-    get,
+    getEncoded,
+    getUnencoded,
   };
 }
 
-const system = {
+const framework = {
   HTTPRequest,
-  cache,
 };
 
-test.cb('fetching a page of One Piece', (t) => {
-  t.plan(1);
-  const backend = Backend(system);
+test('fetching chapters of One Piece', (t) => {
+  const domain = Domain(framework);
+
+  const serie = 'one-piece';
+  return domain.getChapters(serie)
+    .then((chapters) => {
+      t.deepEqual(chapters, [{
+        date: '3/5/2010',
+        name: 'Chapter one',
+        number: 1,
+        path: 'path/to/chapter',
+      }]);
+    });
+});
+
+test('fetching a page of One Piece', (t) => {
+  const domain = Domain(framework);
 
   const serie = 'one-piece';
   const chapter = 1;
   const page = 1;
-  const fn = backend.getPage(serie, chapter, page);
-
-  fn(
-    {
-      end: (arg) => {
-        t.deepEqual(arg, Buffer.from([0x00, 0x01]));
-        t.end();
-      },
-      setHeader: () => {},
-    },
-    (error) => {
-      t.end(error);
-    },
-  );
+  return domain.getPage(serie, chapter, page)
+    .then((image) => {
+      t.deepEqual(image, Buffer.from([0x00, 0x01]));
+    });
 });
 
 test.todo('failing to fetch a page of One Piece');

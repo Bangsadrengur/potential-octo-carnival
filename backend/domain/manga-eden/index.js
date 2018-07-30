@@ -16,11 +16,17 @@ const pages = '/api/chapter/';
 
 
 const Source = ({ HTTPRequest }) => {
-  const { get } = HTTPRequest();
+  const {
+    getEncoded,
+    getUnencoded,
+  } = HTTPRequest();
 
-  const getMangaList = () => get(url + listPath);
-  const getPageList = chapterId => get(url + pages + chapterId);
-  const getImage = path => get(R.concat(cdnUrl, path));
+  const serieMap = { 'one-piece': 'One Piece' };
+
+  const getMangaList = () => getEncoded(url + listPath);
+  const getChapterList = chaptersUrl => getEncoded(`${url}${chapters}${chaptersUrl}`);
+  const getPageList = chapterId => getEncoded(url + pages + chapterId);
+  const getImage = path => getUnencoded(R.concat(cdnUrl, path));
 
   const getSeries = () =>
     getMangaList()
@@ -28,9 +34,8 @@ const Source = ({ HTTPRequest }) => {
 
   const getChapters = serie =>
     getSeries()
-      .then(parseChaptersUrl(serie))
-      .then(R.concat(url + chapters))
-      .then(get)
+      .then(parseChaptersUrl(serieMap[serie]))
+      .then(getChapterList)
       .then(parseChapters);
 
   const getPages = (serie, chapter) =>
