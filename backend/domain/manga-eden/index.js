@@ -1,5 +1,4 @@
 const R = require('ramda');
-const rp = require('request-promise-native');
 const {
   parseSeries,
   parseChaptersUrl,
@@ -15,20 +14,28 @@ const listPath = '/api/list/0/';
 const chapters = '/api/manga/';
 const pages = '/api/chapter/';
 
-const getMangaList = () => rp({ uri: url + listPath, encoding: null });
-const getPageList = chapterId => rp({ uri: url + pages + chapterId, encoding: null });
-const getImage = path => rp({ uri: R.concat(cdnUrl, path), encoding: null });
 
-const createSource = (seriesMap) => {
+const Source = ({ HTTPRequest }) => {
+  const {
+    getEncoded,
+    getUnencoded,
+  } = HTTPRequest();
+
+  const serieMap = { 'one-piece': 'One Piece' };
+
+  const getMangaList = () => getEncoded(url + listPath);
+  const getChapterList = chaptersUrl => getEncoded(`${url}${chapters}${chaptersUrl}`);
+  const getPageList = chapterId => getEncoded(url + pages + chapterId);
+  const getImage = path => getUnencoded(R.concat(cdnUrl, path));
+
   const getSeries = () =>
     getMangaList()
       .then(parseSeries);
 
   const getChapters = serie =>
     getSeries()
-      .then(parseChaptersUrl(seriesMap[serie]))
-      .then(R.concat(url + chapters))
-      .then(rp)
+      .then(parseChaptersUrl(serieMap[serie]))
+      .then(getChapterList)
       .then(parseChapters);
 
   const getPages = (serie, chapter) =>
@@ -54,4 +61,4 @@ const createSource = (seriesMap) => {
   };
 };
 
-module.exports = createSource;
+module.exports = Source;

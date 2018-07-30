@@ -1,6 +1,9 @@
 node_modules/
 elm-stuff/
 dist/
+.nyc_output/
+coverage/
 
 test.jpg
 npm-debug.log
+*.swp
