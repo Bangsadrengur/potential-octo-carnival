@@ -5,7 +5,7 @@
 
 - Offers series
   - One Piece
-  - One-punch Man
+  - One-punch Man (currently only via api, not by browsing)
 - Fetches manga and nothing else
 - Displays manga pages full screen and nothing else
 - Preloads an entire chapter when reading it
