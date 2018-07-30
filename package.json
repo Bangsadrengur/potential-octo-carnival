@@ -59,7 +59,8 @@
       "NODE_ENV": "production"
     },
     "files": [
-      "js/",
+      "backend/",
+      "bin/",
       "dist/",
       "package.json"
     ]
